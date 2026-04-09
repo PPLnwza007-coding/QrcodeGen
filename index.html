@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QR Code Generator</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Thai:wght@300;400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <main>
+    <header>
+      <div class="logo">QR/GEN</div>
+      <p class="tagline">แปลง URL เป็น QR Code · ลบพื้นหลังรูปภาพ</p>
+    </header>
+
+    <div class="tabs">
+      <button class="tab active" data-tab="qr">QR Code</button>
+      <button class="tab" data-tab="bg">ลบพื้นหลัง</button>
+    </div>
+
+    <!-- QR Tab -->
+    <div id="tab-qr">
+      <section class="card">
+        <div class="input-group">
+          <label for="url-input">URL</label>
+          <input id="url-input" type="text" placeholder="https://example.com" value="https://google.com" spellcheck="false" />
+        </div>
+        <div class="controls">
+          <div class="control-item">
+            <label for="size-select">ขนาด</label>
+            <select id="size-select">
+              <option value="128">เล็ก — 128px</option>
+              <option value="200" selected>กลาง — 200px</option>
+              <option value="300">ใหญ่ — 300px</option>
+            </select>
+          </div>
+          <div class="control-item">
+            <label for="fg-color">สี QR</label>
+            <div class="color-wrap">
+              <input type="color" id="fg-color" value="#000000" />
+              <span id="fg-hex">#000000</span>
+            </div>
+          </div>
+          <div class="control-item">
+            <label for="bg-color">พื้นหลัง</label>
+            <div class="color-wrap">
+              <input type="color" id="bg-color" value="#ffffff" />
+              <span id="bg-hex">#ffffff</span>
+            </div>
+          </div>
+          <div class="control-item">
+            <label for="margin">ขอบ <span id="margin-out">20</span>px</label>
+            <input type="range" id="margin" min="0" max="40" value="20" step="4" />
+          </div>
+        </div>
+      </section>
+      <section class="preview-card">
+        <div class="canvas-wrap">
+          <canvas id="qr-canvas"></canvas>
+        </div>
+        <div class="preview-meta">
+          <span id="qr-label">—</span>
+          <button id="dl-btn" class="action-btn" disabled>↓ ดาวน์โหลด PNG</button>
+        </div>
+      </section>
+    </div>
+
+    <!-- BG Removal Tab -->
+    <div id="tab-bg" style="display:none;">
+      <section class="card">
+        <div class="upload-area" id="upload-area">
+          <input type="file" id="file-input" accept="image/*" />
+          <div class="upload-label">
+            <span class="upload-icon">↑</span>
+            <span>คลิกหรือลากรูปภาพมาวางที่นี่</span>
+            <span class="upload-sub">รองรับ JPG, PNG, WEBP</span>
+          </div>
+        </div>
+      </section>
+      <section class="preview-card" id="bg-preview" style="display:none;">
+        <div class="bg-result-grid">
+          <div class="bg-result-item">
+            <p class="result-label">ต้นฉบับ</p>
+            <img id="img-original" />
+          </div>
+          <div class="bg-result-item">
+            <p class="result-label">ลบพื้นหลังแล้ว</p>
+            <div class="checker-wrap">
+              <img id="img-result" style="display:none;" />
+              <div id="bg-loading" class="bg-loading">
+                <div class="spinner"></div>
+                <span>กำลังลบพื้นหลัง...</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button id="dl-bg-btn" class="action-btn" disabled>↓ ดาวน์โหลด PNG</button>
+      </section>
+    </div>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
